@@ -83,6 +83,7 @@ git rebase --abort
 ---
 
 ##  8. Stashing Changes
+## git stash is used to temporarily save (stash away) your uncommitted changes without committing them, so that you can work on something else (like switching branches, pulling updates, etc.) and then bring your changes back later 
 
 ```bash
 git stash
@@ -174,6 +175,7 @@ git push origin main
 
 ##  16. Git Rebase vs Merge
 
+git rebase is used to move or reapply commits from one branch onto another branch, creating a clean, linear commit history.
 | Feature | `git merge` | `git rebase` |
 |:---------|:-------------|:--------------|
 | History | Keeps all commits | Linear history |
@@ -217,5 +219,26 @@ git rebase main
 
 ---
 
+git stash — Example Scenario
+Goal:
+## You’re working on a new feature, but suddenly your team lead asks you to fix a critical bug on another branch.
+## However, you have uncommitted changes that you don’t want to lose or commit yet. 
+
+Apply your saved work back
+git stash apply
+---------------------------------------------------------------------------------------------------------------------
+git rebase — Example Scenario
+## You’re working on a feature branch. While you’re coding, new commits are added to the main branch.
+## You want your branch to be up-to-date with main, but you don’t want messy merge commits.
+
+```bash
+git checkout feature
+git fetch origin
+git rebase origin/main
+(if want to cancel)
+git rebase --abort
+```
+
+-----------------------
 **Author:** Jash Shah  
 **Last Updated:** October 2025
