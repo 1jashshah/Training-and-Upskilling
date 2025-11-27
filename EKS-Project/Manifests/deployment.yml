@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: 1jashshah/anotherbackend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_PORT
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_USER
+
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_PASS
+
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: myapp
+spec:
+  selector:
+    app: backend
+  type: NodePort
+  ports:
+    - port: 5000        # Service port (inside cluster)
+      targetPort: 5000  # Container port
+      nodePort: 30050   # (optional) Port exposed on every worker node

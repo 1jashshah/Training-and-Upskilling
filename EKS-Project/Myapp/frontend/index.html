@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task App</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 11px 20px;
+            margin-left: 8px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #43a047;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: #e8eaf6;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Task Manager</h2>
+
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Enter a task..." />
+            <button onclick="addTask()">Add</button>
+        </div>
+
+        <ul id="taskList"></ul>
+    </div>
+
+<script>
+    async function addTask() {
+        const value = document.getElementById("taskInput").value.trim();
+        if (!value) return alert("Please enter a task");
+
+        // ADD TASK IN UI
+        const li = document.createElement("li");
+        li.innerText = value;
+        document.getElementById("taskList").appendChild(li);
+
+        // CLEAR INPUT
+        document.getElementById("taskInput").value = "";
+
+        // SEND TO BACKEND (optional)
+        try {
+            await fetch("http://localhost:5000/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({task: value})
+            });
+        } catch (err) {
+            console.log("Backend not running yet");
+        }
+    }
+</script>
+
+</body>
+</html>
