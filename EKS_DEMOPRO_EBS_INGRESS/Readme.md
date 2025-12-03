@@ -92,6 +92,19 @@ routes. - It manages health checks automatically.
 -   **Internal ALB**: Accessible only inside VPC.
 -   **Public ALB**: Exposed to internet, used for public websites.
 
+Ingress Groups
+
+a feature of the AWS Load Balancer Controller that allows multiple Kubernetes Ingress resources to share a single AWS Application Load Balancer (ALB). By grouping Ingress objects using the alb.ingress.kubernetes.io/group.name annotation, the controller automatically merges their rules and configures the single ALB to handle routing for all of them. This simplifies management by reducing the number of ALBs needed for different services in a cluster. 
+
+------------------------------------------------------------------------
+What is a StorageClass in Kubernetes? (Simple Explanation)
+
+StorageClass = A blueprint/template that tells Kubernetes how to create storage.
+
+StorageClass is NOT actual storage
+
+It is only a recipe.
+
 ------------------------------------------------------------------------
 
 ## Persistent Storage in Kubernetes (PV, PVC, StorageClass)
